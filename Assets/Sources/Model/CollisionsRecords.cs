@@ -19,15 +19,9 @@ namespace Asteroids.Model
 
         public IEnumerable<Record> Values()
         {
-            yield return IfCollided((Bullet bullet, Enemy enemy) =>
-            {
-                _enemies.StopAll(enemy);
-            });
+            yield return IfCollided((Bullet bullet, Enemy enemy) => { _enemies.StopAll(enemy); });
 
-            yield return IfCollided((DefaultBullet bullet, Enemy enemy) =>
-            {
-                _bullets.StopAll(bullet);
-            });
+            yield return IfCollided((DefaultBullet bullet, Enemy enemy) => { _bullets.StopAll(bullet); });
 
             yield return IfCollided((Bullet bullet, Asteroid asteroid) =>
             {
@@ -42,7 +36,12 @@ namespace Asteroids.Model
 
             yield return IfCollided((Ship ship, Enemy enemy) =>
             {
-                GameEnd?.Invoke();
+                ship.ReduceLivesAmount();
+
+                if (ship.LivesAmount == 0)
+                {
+                    GameEnd?.Invoke();
+                }
             });
         }
 

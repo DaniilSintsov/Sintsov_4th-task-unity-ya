@@ -36,7 +36,7 @@ namespace Asteroids.Model
                 ((dynamic)record).Do((dynamic)pair.Item1, (dynamic)pair.Item2);
         }
 
-        public abstract class Record 
+        public abstract class Record
         {
             public abstract bool IsTarget((object, object) pair);
         }

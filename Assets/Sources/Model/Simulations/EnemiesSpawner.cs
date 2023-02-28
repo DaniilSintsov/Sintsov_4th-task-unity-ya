@@ -31,7 +31,7 @@ namespace Asteroids.Model
             {
                 int countInStack = Random.Range(0, 2);
 
-                while(countInStack-- > 0)
+                while (countInStack-- > 0)
                     _queue.Start(_variants[0], stacks * 2, (factory) => _simulation.Simulate(factory.Invoke()));
             }
 

@@ -7,7 +7,7 @@ public class EnemiesViewFactory : TransformableViewFactory<Enemy>
 {
     [SerializeField] private TransformableView _asteroid;
     [SerializeField] private TransformableView _partOfAsteroid;
-    [SerializeField] private TransformableView _nlo; 
+    [SerializeField] private TransformableView _nlo;
 
     protected override TransformableView GetTemplate(Enemy enemy)
     {

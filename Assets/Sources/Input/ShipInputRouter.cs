@@ -83,7 +83,7 @@ public class ShipInputRouter
     {
         float direction = _input.Ship.Rotate.ReadValue<float>();
 
-        if(direction != 0)
+        if (direction != 0)
             _shipMovement.Rotate(direction, Time.deltaTime);
     }
 }

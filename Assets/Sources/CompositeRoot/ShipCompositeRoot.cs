@@ -12,6 +12,7 @@ namespace CompositeRoot
         [SerializeField] private TransformableView _transformableView;
         [SerializeField] private BulletsViewFactory _bulletsViewFactory;
         [SerializeField] private Camera _camera;
+        [SerializeField] private uint _livesAmount;
 
         private Ship _shipModel;
         private ShipInputRouter _shipInputRouter;
@@ -32,7 +33,7 @@ namespace CompositeRoot
             _baseGun = new DefaultGun();
             _laserGun = new LaserGun(10);
 
-            _shipModel = new Ship(new Vector2(0.5f, 0.5f), 0);
+            _shipModel = new Ship(new Vector2(0.5f, 0.5f), 0, _livesAmount);
             _shipMovement = new ShipMovement(_shipModel);
             _shipInputRouter = new ShipInputRouter(_shipMovement)
                 .BindGunToFirstSlot(_baseGun)

@@ -14,7 +14,7 @@ public class PhysicsEventsBroadcaster : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.collider.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
+        if (collision.collider.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
             _router.TryAddCollision(_model, broadcaster._model);
     }
 }

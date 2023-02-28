@@ -20,7 +20,7 @@ namespace Asteroids.Model
             _ship.MoveLooped(delta);
         }
 
-        public void Rotate(float direction, float deltaTime) 
+        public void Rotate(float direction, float deltaTime)
         {
             if (direction == 0)
                 throw new InvalidOperationException(nameof(direction));

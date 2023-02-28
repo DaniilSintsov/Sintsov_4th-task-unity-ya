@@ -13,7 +13,7 @@ namespace Asteroids.Model
             _timers.Add(new Timer(context, time, onEnd));
         }
 
-        public void StopAll (T context)
+        public void StopAll(T context)
         {
             _timers.RemoveAll(timer => timer.Context.Equals(context));
         }
@@ -23,8 +23,8 @@ namespace Asteroids.Model
             foreach (var timer in _timers.ToList())
             {
                 timer.AccumulatedTime += deltaTime;
-            
-                if(timer.IsEnd)
+
+                if (timer.IsEnd)
                 {
                     _timers.Remove(timer);
                     timer.OnEnd.Invoke(timer.Context);

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace Asteroids.Model
-{ 
+{
     public abstract class Simulation<T>
     {
         private List<PlacedEntity> _entities = new List<PlacedEntity>();
@@ -28,7 +28,9 @@ namespace Asteroids.Model
             OnStoped(placedEntity);
         }
 
-        protected virtual void OnStoped(PlacedEntity placedEntity) { }
+        protected virtual void OnStoped(PlacedEntity placedEntity)
+        {
+        }
 
         public void StopAll(T model)
         {

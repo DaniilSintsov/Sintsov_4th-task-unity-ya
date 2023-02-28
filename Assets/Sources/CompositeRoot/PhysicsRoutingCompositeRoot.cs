@@ -22,7 +22,7 @@ namespace CompositeRoot
             _records = new CollisionsRecords(_shipRoot.Bullets, _enemiesRoot.Simulation);
             _router = new PhysicsRouter(_records.Values);
             _shipEventsBroadcaster.Init(_router, _shipRoot.Model);
-            
+
             StartCoroutine(GetRouterSteper());
         }
 
@@ -40,10 +40,7 @@ namespace CompositeRoot
         {
             _shipRoot.DisableShip();
 
-            _endGameWindow.Show(0, () =>
-            {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            });
+            _endGameWindow.Show(0, () => { SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); });
         }
 
         private IEnumerator GetRouterSteper()

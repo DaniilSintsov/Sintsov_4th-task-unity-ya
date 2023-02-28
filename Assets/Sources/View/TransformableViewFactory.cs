@@ -9,13 +9,15 @@ public abstract class TransformableViewFactory<T> : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private PhysicsRoutingCompositeRoot _router;
 
-    private Dictionary<Simulation<T>.PlacedEntity, TransformableView> _views = new Dictionary<Simulation<T>.PlacedEntity, TransformableView>();
+    private Dictionary<Simulation<T>.PlacedEntity, TransformableView> _views =
+        new Dictionary<Simulation<T>.PlacedEntity, TransformableView>();
 
     public void Create(Simulation<T>.PlacedEntity placedEntity)
     {
-        TransformableView view = Instantiate(GetTemplate(placedEntity.Entity), placedEntity.Transform.Position, Quaternion.identity);
+        TransformableView view = Instantiate(GetTemplate(placedEntity.Entity), placedEntity.Transform.Position,
+            Quaternion.identity);
 
-        if(view.gameObject.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
+        if (view.gameObject.TryGetComponent(out PhysicsEventsBroadcaster broadcaster))
         {
             broadcaster.Init(_router.Model, placedEntity.Entity);
         }

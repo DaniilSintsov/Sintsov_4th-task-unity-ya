@@ -6,7 +6,7 @@ using UnityEngine;
 public class BulletsViewFactory : TransformableViewFactory<Bullet>
 {
     [SerializeField] private TransformableView _defaultBulletTemplate;
-    [SerializeField] private TransformableView _laserBulletTemplate; 
+    [SerializeField] private TransformableView _laserBulletTemplate;
 
     protected override TransformableView GetTemplate(Bullet bullet)
     {

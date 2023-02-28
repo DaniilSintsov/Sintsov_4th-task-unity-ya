@@ -5,7 +5,17 @@ namespace Asteroids.Model
 {
     public class Ship : Transformable
     {
-        public Ship(Vector2 position, float rotation) : base(position, rotation) { }
+        public uint LivesAmount { get; private set; }
+
+        public Ship(Vector2 position, float rotation, uint livesAmount) : base(position, rotation)
+        {
+            LivesAmount = livesAmount;
+        }
+
+        public void ReduceLivesAmount()
+        {
+            LivesAmount--;
+        }
 
         public void MoveLooped(Vector2 delta)
         {
