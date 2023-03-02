@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Codice.Client.BaseCommands;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,6 +10,7 @@ namespace Asteroids.Model
     {
         private readonly EnemiesSimulation _simulation;
         private readonly Transformable _player;
+        private readonly CruisingNlo _cruisingNlo;
 
         private readonly Func<Enemy>[] _variants;
         private readonly Timers<Func<Enemy>> _queue = new Timers<Func<Enemy>>();
@@ -17,11 +19,13 @@ namespace Asteroids.Model
         {
             _simulation = simulation;
             _player = player;
+            _cruisingNlo = new CruisingNlo(GetRandomPositionOutsideScreen(), Config.NloSpeed);
 
             _variants = new Func<Enemy>[]
             {
                 CreateAsteroid,
-                CreateNlo
+                CreateNloForPlayer,
+                CreateNloForAnotherOne
             };
         }
 
@@ -32,14 +36,13 @@ namespace Asteroids.Model
                 int countInStack = Random.Range(0, 2);
 
                 while (countInStack-- > 0)
-                    _queue.Start(_variants[0], stacks * 2, (factory) => _simulation.Simulate(factory.Invoke()));
-            }
+                {
+                    _queue.Start(_variants[0], stacks, (factory) => _simulation.Simulate(factory.Invoke()));
 
-            _queue.Start(_variants[1], 1, (factory) => _simulation.Simulate(factory.Invoke()));
-            _queue.Start(_variants[1], 7, (factory) => _simulation.Simulate(factory.Invoke()));
-            _queue.Start(_variants[1], 7, (factory) => _simulation.Simulate(factory.Invoke()));
-            _queue.Start(_variants[1], 16, (factory) => _simulation.Simulate(factory.Invoke()));
-            _queue.Start(_variants[1], 25, (factory) => _simulation.Simulate(factory.Invoke()));
+                    _queue.Start(_variants[1], stacks * 2, (factory) => _simulation.Simulate(factory.Invoke()));
+                    _queue.Start(_variants[2], stacks, (factory) => _simulation.Simulate(factory.Invoke()));
+                }
+            }
         }
 
         public void Update(float deltaTime)
@@ -52,22 +55,27 @@ namespace Asteroids.Model
             return Random.insideUnitCircle.normalized + new Vector2(0.5F, 0.5F);
         }
 
-        private Nlo CreateNlo()
+        private Nlo CreateNloForPlayer()
         {
             return new Nlo(_player, GetRandomPositionOutsideScreen(), Config.NloSpeed);
         }
 
-        private Asteroid CreateAsteroid()
+        private Nlo CreateNloForAnotherOne()
         {
-            Vector2 postion = GetRandomPositionOutsideScreen();
-            Vector2 direction = GetDirectionThroughtScreen(postion);
-
-            return new Asteroid(postion, direction, Config.AsteroidSpeed);
+            return new Nlo(_cruisingNlo, GetRandomPositionOutsideScreen(), Config.NloSpeed);
         }
 
-        private static Vector2 GetDirectionThroughtScreen(Vector2 postion)
+        private Asteroid CreateAsteroid()
         {
-            return (new Vector2(Random.value, Random.value) - postion).normalized;
+            Vector2 position = GetRandomPositionOutsideScreen();
+            Vector2 direction = GetDirectionThroughtScreen(position);
+
+            return new Asteroid(position, direction, Config.AsteroidSpeed);
+        }
+
+        private static Vector2 GetDirectionThroughtScreen(Vector2 position)
+        {
+            return (new Vector2(Random.value, Random.value) - position).normalized;
         }
     }
 }

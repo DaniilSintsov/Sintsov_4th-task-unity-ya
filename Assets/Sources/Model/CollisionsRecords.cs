@@ -19,9 +19,21 @@ namespace Asteroids.Model
 
         public IEnumerable<Record> Values()
         {
-            yield return IfCollided((Bullet bullet, Enemy enemy) => { _enemies.StopAll(enemy); });
+            yield return IfCollided((Bullet bullet, Enemy enemy) =>
+            {
+                if (!(enemy is CruisingNlo))
+                {
+                    _enemies.StopAll(enemy);
+                }
+            });
 
-            yield return IfCollided((DefaultBullet bullet, Enemy enemy) => { _bullets.StopAll(bullet); });
+            yield return IfCollided((DefaultBullet bullet, Enemy enemy) =>
+            {
+                if (!(enemy is CruisingNlo))
+                {
+                    _bullets.StopAll(bullet);
+                }
+            });
 
             yield return IfCollided((Bullet bullet, Asteroid asteroid) =>
             {
